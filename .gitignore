@@ -1,0 +1,7 @@
+node_modules
+OneBot
+config**.json
+ZenPMRepo
+plugin
+build
+config

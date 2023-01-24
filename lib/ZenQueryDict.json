@@ -1,0 +1,8 @@
+{
+  "meta": "post_type=meta",
+  "message": "post_type=message",
+  "request": "post_type=request",
+  "notice": "post_type=notice",
+  "private": "post_type=message message_type=private",
+  "group": "post_type=message message_type=group"
+}
