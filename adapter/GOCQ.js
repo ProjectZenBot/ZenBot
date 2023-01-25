@@ -128,10 +128,12 @@ function wsInit(address, botName) {
       error(
         '[GOCQ 适配器] 连接 WebSocket 服务器失败，请检查网络连接或者配置文件中的地址是否正确'
       )
+      process.exit(1)
     } else {
       error('[GOCQ 适配器] 出现错误')
+      console.log(e)
+      return 0
     }
-    console.log(e)
     // process.exit(1);
   })
 }

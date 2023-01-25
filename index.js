@@ -6,22 +6,43 @@ const Logger = require('./api').Logger
 const log = Logger.log
 const warn = Logger.warn
 const error = Logger.error
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
+
+const configSample = {
+  Bots: [
+    {
+      name: 'GO-CQHTTP 机器人',
+      adapter: 'GOCQ',
+      config: {
+        ws: 'ws://127.0.0.1:8080',
+        API: 'http://127.0.0.1:5700'
+      }
+    }
+  ],
+  env: 'PRO',
+  SuperAdmin: ['10001']
+}
 
 // welcome message
 log('ZenBot [ALPHA] 由 Node.JS 强力驱动')
 
 if (!fs.existsSync(process.cwd() + '/config.json')) {
   error('配置文件缺失，已自动生成，请检查并填写配置')
-  fs.writeFileSync(process.cwd() + '/config.json', '{"Bots":[{"name":"YOUR-BOT","adapter":"GOCQ","config":{"ws":"ws://127.0.0.1:8080","API":"http://127.0.0.1:5701"}}],"env":"PRO"}')
+  fs.writeFileSync(
+    process.cwd() + '/config.json',
+    JSON.stringify(configSample)
+  )
   process.exit(1)
 }
-const conf = JSON.parse(fs.readFileSync(process.cwd() + '/config.json', 'utf-8'))
-if (!fs.existsSync(process.cwd() + '/config/')) {
-  warn('插件配置文件夹缺失，已自动生成')
-  fs.mkdirSync(process.cwd() + '/config/')
-}
+const conf = JSON.parse(
+  fs.readFileSync(process.cwd() + '/config.json', 'utf-8')
+)
+// if (!fs.existsSync(process.cwd() + '/config/')) {
+//   warn('插件配置文件夹缺失，已自动生成')
+//   fs.mkdirSync(process.cwd() + '/config/')
+// }
+fs.ensureDirSync(process.cwd() + '/config/')
 
 // 测试用
 if (process.pkg) {
@@ -45,11 +66,17 @@ let successNum = 0
 for (let i = 0; i < bots.length; i++) {
   log(`载入机器人 ${bots[i].name}`)
   try {
-    require(path.resolve(__dirname, './adapter/', bots[i].adapter + '.js')).init(bots[i])
+    require(path.resolve(
+      __dirname,
+      './adapter/',
+      bots[i].adapter + '.js'
+    )).init(bots[i])
     successNum += 1
   } catch (er) {
     console.log(er)
-    error(`加载 ${bots[i].name} 失败，请检查配置文件中的字段是否填写正确，或是否载入了对应的适配器`)
+    error(
+      `加载 ${bots[i].name} 失败，请检查配置文件中的字段是否填写正确，或是否载入了对应的适配器`
+    )
   }
   log(`载入机器人 ${bots[i].name} 完成`)
 }
