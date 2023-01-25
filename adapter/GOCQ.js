@@ -23,7 +23,9 @@ const APIData = {
   set_group_kick: ['group_id', 'user_id', 'reject_add_request'],
   set_group_ban: ['group_id', 'user_id', 'duration'],
   set_group_anonymous_ban: ['group_id', 'anonymous', 'flag', 'duration'],
-  set_group_whole_ban: ['group_id', 'enable']
+  set_group_whole_ban: ['group_id', 'enable'],
+  _get_model_show: ['model'],
+  _set_model_show: ['model', 'model_show']
 }
 
 function bind(name) {
@@ -91,6 +93,12 @@ const Bot = {
   },
   set_group_whole_ban: function () {
     return bind(this.botName, 'set_group_whole_ban', arguments)
+  },
+  _get_model_show: function () {
+    return bind(this.botName, '_get_model_show', arguments)
+  },
+  _set_model_show: function () {
+    return bind(this.botName, '_set_model_show', arguments)
   }
 }
 
