@@ -12,12 +12,18 @@ const error = Logger.error
 const APIData = {
   send_private_msg: ['user_id', 'message', 'auto_escape'],
   send_group_msg: ['group_id', 'message', 'auto_escape'],
-  // 发送合并转发（群）
   // 发送消息
   delete_msg: ['message_id'],
   get_msg: ['message_id'],
   get_group_info: ['group_id'],
-  get_stranger_info: ['user_id']
+  get_stranger_info: ['user_id'],
+  send_private_forward_msg: ['user_id', 'messages'],
+  send_group_forward_msg: ['group_id', 'messages'],
+  get_forward_msg: ['message_id'],
+  set_group_kick: ['group_id', 'user_id', 'reject_add_request'],
+  set_group_ban: ['group_id', 'user_id', 'duration'],
+  set_group_anonymous_ban: ['group_id', 'anonymous', 'flag', 'duration'],
+  set_group_whole_ban: ['group_id', 'enable']
 }
 
 function bind(name) {
@@ -64,6 +70,27 @@ const Bot = {
   },
   get_stranger_info: function () {
     return bind(this.botName, 'get_stranger_info', arguments)
+  },
+  send_private_forward_msg: function () {
+    return bind(this.botName, 'send_private_forward_msg', arguments)
+  },
+  send_group_forward_msg: function () {
+    return bind(this.botName, 'send_group_forward_msg', arguments)
+  },
+  get_forward_msg: function () {
+    return bind(this.botName, 'get_forward_msg', arguments)
+  },
+  set_group_kick: function () {
+    return bind(this.botName, 'set_group_kick', arguments)
+  },
+  set_group_ban: function () {
+    return bind(this.botName, 'set_group_ban', arguments)
+  },
+  set_group_anonymous_ban: function () {
+    return bind(this.botName, 'set_group_anonymous_ban', arguments)
+  },
+  set_group_whole_ban: function () {
+    return bind(this.botName, 'set_group_whole_ban', arguments)
   }
 }
 

@@ -48,8 +48,7 @@ Bot.on('type=meta detail_type=response', event => {
         })`
       )
     })
-  }
-  if (event.end_point === 'send_group_msg') {
+  } else if (event.end_point === 'send_group_msg') {
     event.Bot.get_group_info(event.params.group_id).then(res => {
       Logger.log(
         `[${event.Bot.botName}] 发送群 ${res.data.group_name}(${
@@ -59,5 +58,17 @@ Bot.on('type=meta detail_type=response', event => {
         })`
       )
     })
+  } else if (event.end_point === 'send_private_forward_msg') {
+    event.Bot.get_stranger_info(event.params.user_id).then(res => {
+      Logger.log(
+        `[${event.Bot.botName}] 发送好友 ${res.data.nickname}(${event.params.user_id}) 一条自定义转发消息 (${event.res.data.message_id})`
+      )
+    })
+  } else if (event.end_point === 'get_stranger_info') {
+    return 0
+  } else {
+    Logger.log(
+      `[${event.Bot.botName}] 执行了一条终结点为 ${event.end_point} 的操作`
+    )
   }
 })
