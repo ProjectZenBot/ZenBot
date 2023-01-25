@@ -66,6 +66,8 @@ Bot.on('type=meta detail_type=response', event => {
     })
   } else if (event.end_point === 'get_stranger_info') {
     return 0
+  } else if (event.end_point === 'get_group_info') {
+    return 0
   } else {
     Logger.log(
       `[${event.Bot.botName}] 执行了一条终结点为 ${event.end_point} 的操作`
